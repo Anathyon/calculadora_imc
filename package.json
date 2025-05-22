@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bootstrap-icons": "^1.13.1",
     "calculadora_imc": "file:",
     "next": "15.3.2",
     "react": "^19.0.0",
