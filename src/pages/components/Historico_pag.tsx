@@ -48,10 +48,10 @@ export default function Historico({ aberto, fechar, historico, limpar_historico 
     const header = modal.querySelector(".drag-header") as HTMLElement
     if (!header) return
 
-    const mouseDown = (e: MouseEvent) => {
+    const mouseDown = (ev: MouseEvent) => {
       movendo = true
-      startX = e.clientX
-      startY = e.clientY
+      startX = ev.clientX
+      startY = ev.clientY
       const rect = modal.getBoundingClientRect()
       offsetX = rect.left
       offsetY = rect.top

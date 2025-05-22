@@ -4,14 +4,14 @@ interface Props_controle {
   label: string
   state: string
   set: Dispatch<SetStateAction<string>>
-  val_max: string
+  vel_max: string
 }
 
 export default function Campo_formulario(props: Props_controle) {
   const aumentar = () => {
     props.set((v) => {
         const num = parseFloat(v.replace(",","."))
-        return (!isNaN(num) ? Math.min(num + 1, Number(props.val_max)) : 1).toString()
+        return (!isNaN(num) ? Math.min(num + 1, Number(props.vel_max)) : 1).toString()
     })
   }
   const diminuir = () => {
@@ -32,7 +32,7 @@ export default function Campo_formulario(props: Props_controle) {
 
     if (/^[0-9]*[.,]?[0-9]*$/.test(ne_value)) {
       const numeric = parseFloat(ne_value.replace(",", "."))
-      if (!isNaN(numeric) && numeric <=  Number(props.val_max)) {
+      if (!isNaN(numeric) && numeric <=  Number(props.vel_max)) {
         props.set(ne_value)
       } else if (ne_value === "" || ne_value === "0" || ne_value.endsWith(",") || ne_value.endsWith(".")) {
         props.set(ne_value) 

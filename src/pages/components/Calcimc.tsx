@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Form_e_inputs_camp from "./Form_e_inputs_camp"
+import Form_e_inputs from "./Form_e_inputs_camp"
 import Tabela_imc from "./Tabela_Info_imc"
 import Historico from "./Historico_pag"
 
@@ -32,8 +32,8 @@ export default function Calcular_imc() {
 
   return (
     <div className="flex justify-center flex-col items-center w-full mb-6">
-      <Form_e_inputs_camp label="Peso" state={peso} set={setPeso} val_max={"635"} />
-      <Form_e_inputs_camp label="Altura" state={altura} set={setAltura} val_max={"2.51"} />
+      <Form_e_inputs label="Peso" state={peso} set={setPeso} vel_max={"635"} />
+      <Form_e_inputs label="Altura" state={altura} set={setAltura} vel_max={"2.51"} />
 
       <p className="bg-white/10 text-white text-lg px-4 py-2 rounded-lg shadow-sm my-4" style={{margin:"2%", padding:"0.7%"}}>
         Resultado: {imc}
