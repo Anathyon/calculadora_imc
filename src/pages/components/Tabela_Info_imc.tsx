@@ -1,12 +1,12 @@
 interface TabelaProps {
-  imc_res: number
+  imc: number
 }
 
-export default function Tabela_imc({ imc_res }: TabelaProps) {
+export default function Tabela_imc({ imc }: TabelaProps) {
   const marcar = (min: number, max: number) =>
-    imc_res >= min && imc_res <= max ? "bg-black text-white font-bold" : ""
+    imc >= min && imc <= max ? "bg-black text-white font-bold" : ""
 
-  const acima = imc_res > 40 ? "bg-black text-white font-bold" : ""
+  const acima = imc > 40 ? "bg-black text-white font-bold" : ""
 
   return (
     <div className="overflow-x-auto max-w-md w-auto rounded-xl shadow-lg mt-4" style={{marginTop:"2%", marginBottom:"2%"}}>
@@ -18,7 +18,7 @@ export default function Tabela_imc({ imc_res }: TabelaProps) {
           </tr>
         </thead>
         <tbody className="bg-white/80 text-gray-900">
-          <tr className={imc_res < 18.5 ? "bg-black text-white font-bold" : ""}>
+          <tr className={imc < 18.5 ? "bg-black text-white font-bold" : ""}>
             <td className="border border-gray-300 px-2 py-2">Baixo peso</td>
             <td className="border border-gray-300 px-2 py-2">Menor que 18,5</td>
           </tr>
