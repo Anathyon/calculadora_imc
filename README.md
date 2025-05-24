@@ -1,40 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 📊 Calculadora de IMC (Índice de Massa Corporal)
 
-## Getting Started
+Este é um projeto desenvolvido em **Next + TypeScript**, hospedado na **Vercel**, que calcula o IMC de forma prática, responsiva e com histórico de medições.  
+Além do cálculo, o app fornece uma **tabela informativa** com as classificações do IMC e permite visualizar um **histórico detalhado das entradas**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 Funcionalidades
+
+- ✅ Cálculo automático do IMC
+- ✅ Entrada de dados com botões de incremento, decremento e vírgula
+- ✅ Histórico de medições com opção de limpar
+- ✅ Responsividade total (Mobile, Tablet e Desktop)
+- ✅ Estilização moderna com **TailwindCSS**
+- ✅ Fontes personalizadas com Google Fonts
+- ✅ Interface interativa e acessível
+- ✅ Deploy completo na Vercel
+
+---
+## 🔭 Veja o app em funcionamento 
+
+[![Deploy na Vercel](https://vercel.com/button)](https://calculadora-imc-liard-omega.vercel.app/)
+
+---
+
+## 🧪 Tecnologias Utilizadas
+
+| Ferramenta | Descrição |
+|------------|-----------|
+| [Next.js](https://nextjs.org/) | Framework React com suporte a SSR/SSG |
+| [React](https://reactjs.org/) | Biblioteca principal para criação da UI |
+| [TypeScript](https://www.typescriptlang.org/) | Tipagem estática para maior robustez |
+| [Tailwind CSS](https://tailwindcss.com/) | Utilitário de classes para estilização moderna |
+| [Vercel](https://vercel.com/) | Plataforma de deploy automatizado |
+| [Google Fonts (Lora)](https://fonts.google.com/specimen/Lora) | Fonte serifada e legível |
+
+---
+
+## 🖼️ Layout
+
+> 💻 Desktop | 📱 Mobile
+
+| Desktop             | Mobile              |
+|---------------------|---------------------|
+<div align="center">
+  <img src="./public/assets/calc-desktop.png" width="400" alt="Versão Desktop" />
+  <img src="./public/assets/calc-mobile.jpg" width="200" alt="Versão Mobile" />
+</div>
+
+---
+
+## 🔄 Responsividade
+
+A aplicação detecta automaticamente a largura da tela:
+Largura	Classe CSS Aplicada	Adaptação visual
+
+| Tamanho | Dispositivo |
+|------------|-----------|
+| ≤ 640px |	ajuste_m	Mobile|
+| 641px até 1024px | ajuste_t	Tablet|
+|> 1024px |	ajuste_d	Desktop|
+
+---
+## 🧮 Como funciona o cálculo?
+
+A fórmula usada é:
+```ts
+IMC = Peso (kg) / (Altura (m) * Altura (m))
+Exemplo:
+Se você pesa 70 kg e tem 1,75 m de altura:
+
+IMC = 70 / (1.75 × 1.75) ≈ 22.86
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Instalação Local
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+# Clone o repositório
+git clone https://github.com/seu-usuario/seu-repo-imc.git
+cd seu-repo-imc
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Instale as dependências
+npm install
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+# Rode o projeto localmente
+npm run dev
+```
+## 🔒 Validação de Entradas
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  - Limita o valor do peso até 635kg.
+  - Limita a altura até 2.51m.
+  - Suporte a , e . como separador decimal.
+  - Previne valores não numéricos.
 
-## Learn More
+## 🧹 Histórico
 
-To learn more about Next.js, take a look at the following resources:
+Cada vez que o usuário envia o peso e a altura válidos, um novo item é adicionado ao histórico com:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- Peso digitado
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Altura digitada
 
-## Deploy on Vercel
+- IMC calculado
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- O botão “Limpar Histórico” remove todas as entradas.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 🤝 Contribuições
+
+Contribuições são sempre bem-vindas!
+Se tiver ideias para melhorar a calculadora ou deseja relatar um bug, abra uma issue ou um pull request.
+
+## 🧑‍💻 Autor
+
+Desenvolvido por: Anathyon Erysson
+
+📧 anathyon@protonmail.com  
+💼 [LinkedIn](https://www.linkedin.com/in/anathyonerysson/)
