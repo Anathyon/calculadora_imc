@@ -1,0 +1,24 @@
+{
+  "name": "Calculadora IMC - Acompanhe sua saúde",
+  "short_name": "Calculadora IMC",
+  "description": "Calcule seu Índice de Massa Corporal de forma rápida e precisa",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#22c55e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' fill='%2322c55e'%3E%3Cpath d='M96 16L104.72 69.08L176 72L104.72 74.92L96 128L87.28 74.92L16 72L87.28 69.08L96 16Z'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%2322c55e'%3E%3Cpath d='M256 42.67L277.93 184.21L469.33 192L277.93 199.79L256 341.33L234.07 199.79L42.67 192L234.07 184.21L256 42.67Z'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["health", "fitness", "utilities"],
+  "lang": "pt-BR"
+}
