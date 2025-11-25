@@ -37,7 +37,7 @@ export default function Home() {
       {/* Header */}
       <div style={{
         backgroundColor: '#374151',
-        padding: isMobile ? '1.5rem 1rem' : '2rem 0',
+        padding: isMobile ? '1.15rem 1rem' : '1.53rem 0',
         width: '100%',
         textAlign: 'center'
       }}>
