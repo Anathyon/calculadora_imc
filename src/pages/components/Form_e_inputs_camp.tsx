@@ -1,83 +1,119 @@
-import { Dispatch, SetStateAction } from "react"
+import { motion } from "framer-motion"
+import { useImcStore } from "../../store/imcStore"
+import { useState, useEffect } from "react"
 
 interface Props_controle {
   label: string
   state: string
-  set: Dispatch<SetStateAction<string>>
   vel_max: string
 }
 
 export default function Campo_formulario(props: Props_controle) {
-  const aumentar = () => {
-    props.set((v) => {
-        const num = parseFloat(v.replace(",","."))
-        return (!isNaN(num) ? Math.min(num + 1, Number(props.vel_max)) : 1).toString()
-    })
-  }
-  const diminuir = () => {
-    props.set((v) => {
-      const num = parseFloat(v.replace(",","."))
-      return (!isNaN(num) ? Math.max(num - 1, 0) : 0).toString()
-    })
-  }
- 
-  const decimal = () => {
-    if (!props.state.includes(",") && !props.state.includes(".")) {
-         props.set(props.state + ",")
-    }
-  }
+  const { setPeso, setAltura } = useImcStore()
+  const [hasError, setHasError] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  
+  const isWeight = props.label?.includes("Peso") || false
+  const setValue = isWeight ? setPeso : setAltura
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
-    const ne_value = e.target.value
-
-    if (/^[0-9]*[.,]?[0-9]*$/.test(ne_value)) {
-      const numeric = parseFloat(ne_value.replace(",", "."))
-      if (!isNaN(numeric) && numeric <=  Number(props.vel_max)) {
-        props.set(ne_value)
-      } else if (ne_value === "" || ne_value === "0" || ne_value.endsWith(",") || ne_value.endsWith(".")) {
-        props.set(ne_value) 
+    const value = e.target.value
+    setHasError(false)
+    
+    // Só permite números, vírgula e ponto
+    if (value === "" || /^[0-9]*[.,]?[0-9]*$/.test(value)) {
+      const numeric = parseFloat(value.replace(",", "."))
+      const maxValue = parseFloat(props.vel_max)
+      
+      // Não permite valores negativos ou maiores que o limite
+      if (value === "" || (!isNaN(numeric) && numeric >= 0 && numeric <= maxValue)) {
+        setValue(value)
       }
     }
   }
 
-  return (
-    <div className="flex flex-col gap-2 w-64">
-      <label className="text-white">{props.label}</label>
+  const handleBlur = () => {
+    if (props.state === "" || props.state === "0") {
+      setHasError(true)
+    }
+  }
 
-      <div className="flex items-center justify-between bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 rounded-xl shadow-lg px-2 py-1.5">
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px'
+      }}
+    >
+      <label style={{
+        color: '#cbd5e1',
+        fontSize: '14px',
+        fontWeight: '500',
+        margin: '0'
+      }}>{props.label}</label>
+
+      <div style={{ position: 'relative' }}>
         <input
           type="text"
           value={props.state}
           onChange={handleChange}
-          className="text-2xl font-bold bg-transparent outline-none text-black w-20"
+          onBlur={handleBlur}
+          placeholder={props.label?.includes("Peso") ? "Ex: 70.5" : "Ex: 1.75"}
+          style={{
+            width: '100%',
+            backgroundColor: '#374151',
+            border: hasError ? '1px solid #ef4444' : '1px solid #4b5563',
+            borderRadius: '12px',
+            padding: isMobile ? '12px 48px 12px 16px' : '12px 48px 12px 16px',
+            color: 'white',
+            fontSize: '16px',
+            outline: 'none',
+            transition: 'border-color 0.2s'
+          }}
+          onFocus={(e) => {
+            if (!hasError) {
+              e.target.style.borderColor = '#22c55e'
+            }
+          }}
           inputMode="decimal"
-          style={{padding:"1.7%"}}
         />
-
-        <div className="flex gap-1">
-          <button
-            onClick={diminuir}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition"
-          >
-            <i className="bi bi-dash"></i>
-          </button>
-
-          <button
-            onClick={aumentar}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition"
-          >
-            <i className="bi bi-plus"></i>
-          </button>
-
-          <button
-            onClick={decimal}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition"
-          >
-            <i className="bi bi-dot"></i>
-          </button>
+        
+        <div style={{
+          position: 'absolute',
+          right: '12px',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        }}>
+          <svg style={{ width: '20px', height: '20px', color: '#9ca3af' }} fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"/>
+          </svg>
         </div>
       </div>
-    </div>
+      
+      {hasError && (
+        <motion.p 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            color: '#f87171',
+            fontSize: '12px',
+            margin: '0'
+          }}
+        >
+          Campo obrigatório
+        </motion.p>
+      )}
+    </motion.div>
   )
 }
   

@@ -37,7 +37,15 @@ next-env.d.ts
 !.yarn/releases
 !.yarn/versions
 
-# Cobertura de testes
+
+# Testes e cobertura
+__tests__/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+jest.config.js
+jest.setup.js
 coverage/
 
 # Certificados locais

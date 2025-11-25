@@ -1,40 +1,160 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🏥 Calculadora de IMC
 
-## Getting Started
+Uma aplicação moderna para calcular o Índice de Massa Corporal (IMC) com design baseado nas especificações fornecidas.
 
-First, run the development server:
+## ✨ Funcionalidades
 
+- 🧮 **Cálculo de IMC**: Interface limpa com campos de peso e altura
+- 📊 **Classificação automática**: Exibição clara da classificação do IMC
+- 📈 **Histórico integrado**: Visualização dos cálculos anteriores na mesma tela
+- 🎨 **Design fiel**: Interface baseada exatamente no design fornecido
+- 📱 **Responsivo**: Layout adaptável para diferentes tamanhos de tela
+- ⚡ **Performance**: Otimizado com Next.js e Tailwind CSS
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Next.js 15** - Framework React para produção
+- **TypeScript** - Tipagem estática para JavaScript
+- **Tailwind CSS** - Framework CSS utilitário
+- **Framer Motion** - Biblioteca de animações
+- **Zustand** - Gerenciamento de estado global
+- **Jest** - Framework de testes
+- **Testing Library** - Utilitários para testes de componentes
+
+## 🚀 Como executar
+
+### Pré-requisitos
+- Node.js 18+ 
+- npm ou yarn
+
+### Instalação
+
+1. Clone o repositório:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <url-do-repositorio>
+cd calculadora_imc
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências:
+```bash
+npm install --legacy-peer-deps
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+3. Execute em modo de desenvolvimento:
+```bash
+npm run dev
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+4. Acesse http://localhost:3000
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🧪 Testes
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Execute os testes:
+```bash
+npm test
+```
 
-## Learn More
+Execute os testes em modo watch:
+```bash
+npm run test:watch
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🏗️ Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Para fazer o build de produção:
+```bash
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Para executar a versão de produção:
+```bash
+npm start
+```
 
-## Deploy on Vercel
+## 📋 Scripts Disponíveis
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` - Executa em modo de desenvolvimento
+- `npm run build` - Cria build de produção
+- `npm start` - Executa versão de produção
+- `npm run lint` - Executa linting do código
+- `npm test` - Executa testes
+- `npm run test:watch` - Executa testes em modo watch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 🎯 Funcionalidades Implementadas
+
+### ✅ Cálculo de IMC
+- Entrada de peso e altura com validação
+- Cálculo automático do IMC
+- Classificação baseada nos padrões da OMS
+
+### ✅ Interface Moderna
+- Design baseado no Figma fornecido
+- Animações suaves com Framer Motion
+- Tema escuro elegante
+- Componentes reutilizáveis
+
+### ✅ Gerenciamento de Estado
+- Estado global com Zustand
+- Persistência do histórico
+- Sincronização entre componentes
+
+### ✅ Histórico
+- Armazenamento de cálculos anteriores
+- Exibição com data e hora
+- Funcionalidade de limpeza
+
+### ✅ Testes
+- Testes unitários com Jest
+- Testes de componentes com Testing Library
+- Cobertura do store e componentes principais
+
+## 🎨 Design
+
+O design foi baseado nas imagens fornecidas, implementando:
+- Layout em grid responsivo
+- Cards com glassmorphism
+- Animações de entrada e hover
+- Tipografia moderna com Inter
+- Ícones do Bootstrap Icons
+
+## 📱 Responsividade
+
+A aplicação é totalmente responsiva, adaptando-se a:
+- Desktop (1024px+)
+- Tablet (768px - 1023px)
+- Mobile (até 767px)
+
+## 🔧 Estrutura do Projeto
+
+```
+src/
+├── components/          # Componentes reutilizáveis
+├── pages/              # Páginas Next.js
+│   └── components/     # Componentes específicos de páginas
+├── store/              # Store Zustand
+└── styles/             # Estilos globais
+
+__tests__/              # Testes
+├── imcStore.test.ts    # Testes do store
+└── Resultado.test.tsx  # Testes de componentes
+```
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+Desenvolvido com ❤️ por [Seu Nome]
+
+---
+
+⭐ Se este projeto te ajudou, considere dar uma estrela!

@@ -1,9 +1,17 @@
-import { useRef, useEffect, } from "react"
+import { useRef, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+
+interface HistoricoItem {
+  peso: string
+  altura: string
+  imc: string
+  data: string
+}
 
 interface HistoricoProps {
   aberto: boolean
   fechar: () => void
-  historico: { peso: string, altura: string, imc: string }[]
+  historico: HistoricoItem[]
   limpar_historico: () => void
 }
 
@@ -92,57 +100,103 @@ export default function Historico({ aberto, fechar, historico, limpar_historico 
     }
   }, [aberto])
 
-  if (!aberto) return null
-
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50">
-      <div
-        ref={modalRef}
-        className={`
-          absolute 
-          w-[90vw] max-w-[30rem] 
-          p-4 rounded-xl 
-          bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 
-          shadow-xl text-center cursor-default
-          text-base
-        `}
-        style={{
-          position: "absolute",
-        }}
-      >
-        <h2 className="drag-header cursor-move font-bold mb-4 text-gray-800 select-none text-2xl">
-          Histórico de IMC
-        </h2>
-
-        <ul className="space-y-2 text-gray-800 items-center justify-center flex flex-col">
-          {historico.length === 0 ? (
-            <li>Nenhum dado ainda.</li>
-          ) : (
-            historico.map((e, i) => (
-              <li key={i} className="bg-gradient-to-br from-gray-600 via-gray-700 to-gray-900 border-2 p-2 rounded w-[90%] text-white" style={{margin:"0.5%"}}>
-                Peso: {e.peso} kg, Altura: {e.altura} m, IMC: {e.imc}
-              </li>
-            ))
-          )}
-        </ul>
-
-        <div className="mt-4 flex justify-center gap-4 flex-wrap">
-          <button
-            onClick={limpar_historico}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
-            style={{margin:"1%", padding:"1%"}}
+    <AnimatePresence>
+      {aberto && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={fechar}
+        >
+          <motion.div
+            ref={modalRef}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-slate-800 rounded-2xl p-6 w-full max-w-2xl max-h-[80vh] overflow-hidden border border-slate-700"
           >
-            Limpar
-          </button>
-          <button
-            onClick={fechar}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
-            style={{margin:"1%", padding:"1%"}}
-          >
-            Fechar
-          </button>
-        </div>
-      </div>
-    </div>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                  <i className="bi bi-clock-history text-white"></i>
+                </div>
+                <h2 className="text-xl font-semibold text-white">
+                  Histórico ({historico.length})
+                </h2>
+              </div>
+              <button
+                onClick={fechar}
+                className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition-colors"
+              >
+                <i className="bi bi-x text-lg"></i>
+              </button>
+            </div>
+
+            <div className="overflow-y-auto max-h-96 space-y-3">
+              {historico.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="bi bi-exclamation-circle text-2xl text-slate-400"></i>
+                  </div>
+                  <p className="text-slate-400">Nenhum cálculo realizado ainda</p>
+                  <p className="text-slate-500 text-sm mt-1">Seus cálculos aparecerão aqui</p>
+                </div>
+              ) : (
+                historico.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-slate-700/50 rounded-xl p-4 border border-slate-600"
+                  >
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div>
+                        <div className="text-slate-400 text-xs">Peso</div>
+                        <div className="text-white font-semibold">{item.peso} kg</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-400 text-xs">Altura</div>
+                        <div className="text-white font-semibold">{item.altura} m</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-400 text-xs">IMC</div>
+                        <div className="text-green-400 font-bold text-lg">{item.imc}</div>
+                      </div>
+                    </div>
+                    <div className="text-slate-500 text-xs text-center mt-2">
+                      {item.data}
+                    </div>
+                  </motion.div>
+                ))
+              )}
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={limpar_historico}
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
+              >
+                <i className="bi bi-trash"></i>
+                Limpar Histórico
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={fechar}
+                className="flex-1 bg-slate-600 hover:bg-slate-500 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+              >
+                Fechar
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

@@ -1,43 +1,63 @@
-import { useState, useEffect } from "react"
+import Head from 'next/head'
 import Calcular_imc from "./components/Calcimc"
-import { Lora } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
-const lora = Lora ({
-  subsets: ['latin'],      
-  weight: ['400', '700'],   
-  display: 'swap',         
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 })
 
 export default function Home() {
-  
-   const [ajuste_css,Set_ajuste_css] = useState<string>("")
-  
-    useEffect(()=>{
-        const aplicar_classe = () => {
-        const largura = window.innerWidth
-        if (largura <= 640) {
-            Set_ajuste_css("ajuste_m")
-        }else if (largura <= 1024){
-            Set_ajuste_css("ajuste_t") 
-        }else{
-            Set_ajuste_css("ajuste_d") 
-        }
-      }
-  
-      aplicar_classe()
-      window.addEventListener("resize", aplicar_classe)
-      return () => window.removeEventListener("resize", aplicar_classe)
-    },[])
-  
   return (
-   <section className={lora.className}>
-   <div className={`bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700 
-                   h-auto w-full max-w-screen-lg mx-auto flex flex-col relative 
-                   rounded-2xl mt-6 p-4 sm:p-6 ${ajuste_css}`}
-                   style={{padding:"3%"}}>
-           <h1 className="text-white text-xl font-semibold text-center mt-[5%]">Calculadora IMC</h1>
-           <Calcular_imc/>
-    </div>
-    </section>
+    <>
+      <Head>
+        <title>Calculadora IMC - Acompanhe sua saúde</title>
+        <meta name="description" content="Calcule seu Índice de Massa Corporal de forma rápida e precisa" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2322c55e'%3E%3Cpath d='M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z'/%3E%3C/svg%3E" />
+      </Head>
+      <div className={inter.className} style={{
+        minHeight: '100dvh',
+        width: '100dvw',
+        backgroundColor: '#0f172a',
+        margin: '0',
+        padding: '0'
+      }}>
+      {/* Header */}
+      <div style={{
+        backgroundColor: '#1e293b',
+        padding: '1rem 0',
+        width: '100%'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '0.75rem',
+          padding: '0 1rem'
+        }}>
+          <svg style={{ width: '24px', height: '24px', color: '#4ade80' }} viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+          </svg>
+          <h1 style={{
+            color: 'white',
+            fontSize: '18px',
+            fontWeight: '500',
+            margin: '0',
+            textAlign: 'center'
+          }}>Calculadora de IMC - Acompanhe sua saúde</h1>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={{
+        width: '100%',
+        padding: '2rem 1rem'
+      }}>
+        <Calcular_imc />
+      </div>
+      </div>
+    </>
   )
 }
