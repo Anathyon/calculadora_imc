@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Calcular_imc from "./components/Calcimc"
 import { Inter } from 'next/font/google'
 import { useState, useEffect } from 'react'
@@ -27,7 +28,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="Calculadora IMC" />
-        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2322c55e'%3E%3Cpath d='M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z'/%3E%3C/svg%3E" />
+        <link rel="icon" href="/assets/icon-health.svg" />
       </Head>
       <div className={inter.className} style={{
         minHeight: '100dvh',
@@ -47,17 +48,17 @@ export default function Home() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: isMobile ? '0.375rem' : '0.5rem',
+          gap: isMobile ? '0.1rem' : '0.15rem',
           marginBottom: isMobile ? '0.375rem' : '0.5rem',
           flexWrap: isMobile ? 'wrap' : 'nowrap'
         }}>
-          <svg style={{ 
-            width: isMobile ? '24px' : '32px', 
-            height: isMobile ? '24px' : '32px', 
-            color: '#22c55e' 
-          }} viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
-          </svg>
+          <Image 
+            src="/assets/icon-health.png" 
+            alt="ícone de saúde" 
+            width={isMobile ? 72 : 104}
+            height={isMobile ? 72 : 104}
+            style={{ objectFit: 'contain' }}
+          />
           <h1 style={{
             color: 'white',
             fontSize: isMobile ? '1.75rem' : '2.5rem',
