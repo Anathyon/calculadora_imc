@@ -3,6 +3,7 @@ import { useImcStore } from "../../store/imcStore"
 import { useState, useEffect } from "react"
 import Form_e_inputs from "./Form_e_inputs_camp"
 import Resultado from "./Resultado"
+import Recomendacoes from "./Recomendacoes"
 import Historico from "./Historico_pag"
 
 export default function Calcular_imc() {
@@ -123,6 +124,7 @@ export default function Calcular_imc() {
           transition={{ delay: 0.1 }}
         >
           <Resultado />
+          <Recomendacoes />
         </motion.div>
       </div>
 

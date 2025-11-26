@@ -28,7 +28,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="Calculadora IMC" />
-        <link rel="icon" href="/assets/icon-health.svg" />
+        <link rel="icon" href="/assets/icon.png" />
       </Head>
       <div className={inter.className} style={{
         minHeight: '100dvh',
