@@ -10,30 +10,12 @@
   "icons": [
     {
       "src": "/assets/icon.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "density": "1.5"
-    },
-    {
-      "src": "/assets/icon.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "density": "2.0"
-    },
-    {
-      "src": "/assets/icon.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "density": "3.0"
-    },
-    {
-      "src": "/assets/icon-health.png",
-      "sizes": "192x192",
+      "sizes": "any",
       "type": "image/png"
     },
     {
       "src": "/assets/icon-health.png",
-      "sizes": "512x512",
+      "sizes": "any",
       "type": "image/png"
     },
     {

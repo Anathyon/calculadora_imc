@@ -1,15 +1,21 @@
 const CACHE_NAME = 'calculadora-imc-v1';
 const urlsToCache = [
   '/',
-  '/manifest.json',
-  '/_next/static/css/',
-  '/_next/static/js/'
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+      .then((cache) => {
+        return Promise.all(
+          urlsToCache.map(url => {
+            return cache.add(url).catch(err => {
+              console.log('Failed to cache:', url, err);
+            });
+          })
+        );
+      })
   );
 });
 
