@@ -14,14 +14,14 @@
       "type": "image/png"
     },
     {
-      "src": "/assets/icon-health.png",
+      "src": "/assets/icon.png",
       "sizes": "any",
       "type": "image/png"
     },
     {
-      "src": "/assets/icon-health.svg",
+      "src": "/assets/icon.png",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ],
   "categories": ["health", "fitness", "utilities"],
