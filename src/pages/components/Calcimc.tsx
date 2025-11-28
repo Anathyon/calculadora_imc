@@ -4,17 +4,19 @@ import { useState, useEffect } from "react"
 import Form_e_inputs from "./Form_e_inputs_camp"
 import Resultado from "./Resultado"
 import Recomendacoes from "./Recomendacoes"
-import Historico from "./Historico_pag"
 
-export default function Calcular_imc() {
+
+interface CalcularImcProps {
+  darkMode: boolean
+}
+
+export default function Calcular_imc({ darkMode }: CalcularImcProps) {
   const { 
     peso, 
     altura, 
     historico, 
-    mostrarHistorico, 
     calcularImc, 
-    limparHistorico, 
-    setMostrarHistorico 
+    limparHistorico
   } = useImcStore()
 
   const [isMobile, setIsMobile] = useState(false)
@@ -44,10 +46,10 @@ export default function Calcular_imc() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           style={{
-            backgroundColor: '#1e293b',
+            backgroundColor: darkMode ? '#1e293b' : '#ffffff',
             borderRadius: '16px',
             padding: isMobile ? '1.25rem' : '1.5rem',
-            border: '1px solid #334155'
+            border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
           }}
         >
           <div style={{
@@ -72,7 +74,7 @@ export default function Calcular_imc() {
             <h2 style={{
               fontSize: isMobile ? '18px' : '20px',
               fontWeight: '600',
-              color: 'white',
+              color: darkMode ? 'white' : '#1f2937',
               margin: '0'
             }}>Calcular IMC</h2>
           </div>
@@ -83,8 +85,8 @@ export default function Calcular_imc() {
             gap: '1rem',
             marginBottom: '1.5rem'
           }}>
-            <Form_e_inputs label="Peso (kg)" state={peso} vel_max={"640"} />
-            <Form_e_inputs label="Altura (m)" state={altura} vel_max={"2.80"} />
+            <Form_e_inputs label="Peso (kg)" state={peso} vel_max={"640"} darkMode={darkMode} />
+            <Form_e_inputs label="Altura (m)" state={altura} vel_max={"2.80"} darkMode={darkMode} />
           </div>
 
           <motion.button
@@ -123,8 +125,8 @@ export default function Calcular_imc() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Resultado />
-          <Recomendacoes />
+          <Resultado darkMode={darkMode} />
+          <Recomendacoes darkMode={darkMode} />
         </motion.div>
       </div>
 
@@ -135,10 +137,10 @@ export default function Calcular_imc() {
         transition={{ delay: 0.2 }}
       >
         <div style={{
-          backgroundColor: '#1e293b',
+          backgroundColor: darkMode ? '#1e293b' : '#ffffff',
           borderRadius: '16px',
           padding: isMobile ? '20px' : '24px',
-          border: '1px solid #334155'
+          border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
         }}>
           <div style={{
             display: 'flex',
@@ -169,7 +171,7 @@ export default function Calcular_imc() {
               <h2 style={{
                 fontSize: isMobile ? '18px' : '20px',
                 fontWeight: '600',
-                color: 'white',
+                color: darkMode ? 'white' : '#1f2937',
                 margin: '0'
               }}>Histórico ({historico.length})</h2>
             </div>
@@ -198,24 +200,24 @@ export default function Calcular_imc() {
               <div style={{
                 width: '64px',
                 height: '64px',
-                backgroundColor: '#374151',
+                backgroundColor: darkMode ? '#374151' : '#f3f4f6',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 margin: '0 auto 16px'
               }}>
-                <svg style={{ width: '32px', height: '32px', color: '#9ca3af' }} fill="currentColor" viewBox="0 0 20 20">
+                <svg style={{ width: '32px', height: '32px', color: darkMode ? '#9ca3af' : '#6b7280' }} fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
                 </svg>
               </div>
               <p style={{
-                color: '#9ca3af',
+                color: darkMode ? '#9ca3af' : '#6b7280',
                 fontSize: isMobile ? '16px' : '18px',
                 margin: '0 0 4px'
               }}>Nenhum cálculo realizado ainda</p>
               <p style={{
-                color: '#6b7280',
+                color: darkMode ? '#6b7280' : '#9ca3af',
                 fontSize: '14px',
                 margin: '0'
               }}>Seus cálculos aparecerão aqui</p>
@@ -235,10 +237,10 @@ export default function Calcular_imc() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   style={{
-                    backgroundColor: 'rgba(55, 65, 81, 0.5)',
+                    backgroundColor: darkMode ? 'rgba(55, 65, 81, 0.5)' : '#f8fafc',
                     borderRadius: '12px',
                     padding: '16px',
-                    border: '1px solid #4b5563'
+                    border: darkMode ? '1px solid #4b5563' : '1px solid #e2e8f0'
                   }}
                 >
                   <div style={{
@@ -249,27 +251,27 @@ export default function Calcular_imc() {
                     marginBottom: isMobile ? '8px' : '0'
                   }}>
                     <div>
-                      <div style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '4px' }}>Peso</div>
-                      <div style={{ color: 'white', fontWeight: '600' }}>{item.peso} kg</div>
+                      <div style={{ color: darkMode ? '#9ca3af' : '#6b7280', fontSize: '12px', marginBottom: '4px' }}>Peso</div>
+                      <div style={{ color: darkMode ? 'white' : '#1f2937', fontWeight: '600' }}>{item.peso} kg</div>
                     </div>
                     <div>
-                      <div style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '4px' }}>Altura</div>
-                      <div style={{ color: 'white', fontWeight: '600' }}>{item.altura} m</div>
+                      <div style={{ color: darkMode ? '#9ca3af' : '#6b7280', fontSize: '12px', marginBottom: '4px' }}>Altura</div>
+                      <div style={{ color: darkMode ? 'white' : '#1f2937', fontWeight: '600' }}>{item.altura} m</div>
                     </div>
                     {isMobile ? (
                       <div style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
-                        <div style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '4px' }}>IMC</div>
-                        <div style={{ color: '#4ade80', fontWeight: 'bold', fontSize: '18px' }}>{item.imc}</div>
+                        <div style={{ color: darkMode ? '#9ca3af' : '#6b7280', fontSize: '12px', marginBottom: '4px' }}>IMC</div>
+                        <div style={{ color: '#22c55e', fontWeight: 'bold', fontSize: '18px' }}>{item.imc}</div>
                       </div>
                     ) : (
                       <div>
-                        <div style={{ color: '#9ca3af', fontSize: '12px', marginBottom: '4px' }}>IMC</div>
-                        <div style={{ color: '#4ade80', fontWeight: 'bold', fontSize: '18px' }}>{item.imc}</div>
+                        <div style={{ color: darkMode ? '#9ca3af' : '#6b7280', fontSize: '12px', marginBottom: '4px' }}>IMC</div>
+                        <div style={{ color: '#22c55e', fontWeight: 'bold', fontSize: '18px' }}>{item.imc}</div>
                       </div>
                     )}
                   </div>
                   <div style={{
-                    color: '#6b7280',
+                    color: darkMode ? '#6b7280' : '#9ca3af',
                     fontSize: '12px',
                     textAlign: 'center',
                     marginTop: '8px'
@@ -283,12 +285,7 @@ export default function Calcular_imc() {
         </div>
       </motion.div>
 
-      <Historico
-        aberto={mostrarHistorico}
-        fechar={() => setMostrarHistorico(false)}
-        historico={historico}
-        limpar_historico={limparHistorico}
-      />
+
     </div>
   )
 }

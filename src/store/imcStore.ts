@@ -13,13 +13,11 @@ interface ImcStore {
   altura: string
   imc: string
   historico: HistoricoItem[]
-  mostrarHistorico: boolean
   setPeso: (peso: string) => void
   setAltura: (altura: string) => void
   setImc: (imc: string) => void
   adicionarHistorico: (item: Omit<HistoricoItem, 'data'>) => void
   limparHistorico: () => void
-  setMostrarHistorico: (mostrar: boolean) => void
   calcularImc: () => void
 }
 
@@ -29,7 +27,7 @@ export const useImcStore = create<ImcStore>()(persist(
     altura: "0", 
     imc: "0",
     historico: [],
-    mostrarHistorico: false,
+
     
     setPeso: (peso) => set({ peso }),
     setAltura: (altura) => set({ altura }),
@@ -46,7 +44,7 @@ export const useImcStore = create<ImcStore>()(persist(
     },
     
     limparHistorico: () => set({ historico: [] }),
-    setMostrarHistorico: (mostrar) => set({ mostrarHistorico: mostrar }),
+
     
     calcularImc: () => {
       const { peso, altura } = get()

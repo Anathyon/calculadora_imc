@@ -2,7 +2,11 @@ import { motion } from "framer-motion"
 import { useImcStore } from "../../store/imcStore"
 import { useState, useEffect } from "react"
 
-export default function Resultado() {
+interface ResultadoProps {
+  darkMode: boolean
+}
+
+export default function Resultado({ darkMode }: ResultadoProps) {
   const { imc, peso, altura } = useImcStore()
   const [isMobile, setIsMobile] = useState(false)
   
@@ -32,31 +36,31 @@ export default function Resultado() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         style={{
-          backgroundColor: '#1e293b',
+          backgroundColor: darkMode ? '#1e293b' : '#ffffff',
           borderRadius: '16px',
           padding: isMobile ? '20px' : '24px',
-          border: '1px solid #334155',
+          border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0',
           textAlign: 'center'
         }}
       >
         <div style={{
           width: '64px',
           height: '64px',
-          backgroundColor: '#374151',
+          backgroundColor: darkMode ? '#374151' : '#f3f4f6',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           margin: '0 auto 16px'
         }}>
-          <svg style={{ width: '32px', height: '32px', color: '#9ca3af' }} fill="currentColor" viewBox="0 0 20 20">
+          <svg style={{ width: '32px', height: '32px', color: darkMode ? '#9ca3af' : '#6b7280' }} fill="currentColor" viewBox="0 0 20 20">
             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
         </div>
         <h3 style={{
           fontSize: isMobile ? '16px' : '18px',
           fontWeight: '600',
-          color: 'white',
+          color: darkMode ? 'white' : '#1f2937',
           margin: '0'
         }}>Preencha os campos e calcule seu IMC</h3>
       </motion.div>
@@ -68,10 +72,10 @@ export default function Resultado() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       style={{
-        backgroundColor: '#1e293b',
+        backgroundColor: darkMode ? '#1e293b' : '#ffffff',
         borderRadius: '16px',
         padding: isMobile ? '20px' : '24px',
-        border: '1px solid #334155'
+        border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0'
       }}
     >
       <div style={{
@@ -96,7 +100,7 @@ export default function Resultado() {
         <h3 style={{
           fontSize: isMobile ? '18px' : '20px',
           fontWeight: '600',
-          color: 'white',
+          color: darkMode ? 'white' : '#1f2937',
           margin: '0'
         }}>Resultado</h3>
       </div>
@@ -106,7 +110,7 @@ export default function Resultado() {
         marginBottom: '24px'
       }}>
         <div style={{
-          color: '#9ca3af',
+          color: darkMode ? '#9ca3af' : '#6b7280',
           fontSize: '14px',
           marginBottom: '8px'
         }}>Seu IMC é</div>
@@ -117,7 +121,7 @@ export default function Resultado() {
           style={{
             fontSize: isMobile ? '48px' : '60px',
             fontWeight: 'bold',
-            color: 'white',
+            color: darkMode ? 'white' : '#1f2937',
             marginBottom: '16px',
             lineHeight: '1'
           }}
@@ -127,7 +131,7 @@ export default function Resultado() {
         
         <div style={{ marginBottom: '16px' }}>
           <div style={{
-            color: '#9ca3af',
+            color: darkMode ? '#9ca3af' : '#6b7280',
             fontSize: '14px',
             marginBottom: '8px'
           }}>Classificação</div>
@@ -153,24 +157,24 @@ export default function Resultado() {
       }}>
         <div>
           <div style={{
-            color: '#9ca3af',
+            color: darkMode ? '#9ca3af' : '#6b7280',
             fontSize: '14px',
             marginBottom: '4px'
           }}>Peso</div>
           <div style={{
-            color: 'white',
+            color: darkMode ? 'white' : '#1f2937',
             fontWeight: '600',
             fontSize: isMobile ? '16px' : '18px'
           }}>{peso} kg</div>
         </div>
         <div>
           <div style={{
-            color: '#9ca3af',
+            color: darkMode ? '#9ca3af' : '#6b7280',
             fontSize: '14px',
             marginBottom: '4px'
           }}>Altura</div>
           <div style={{
-            color: 'white',
+            color: darkMode ? 'white' : '#1f2937',
             fontWeight: '600',
             fontSize: isMobile ? '16px' : '18px'
           }}>{altura} m</div>
@@ -179,7 +183,7 @@ export default function Resultado() {
 
       <div style={{
         fontSize: '12px',
-        color: '#6b7280',
+        color: darkMode ? '#6b7280' : '#9ca3af',
         textAlign: 'center'
       }}>
         {new Date().toLocaleString('pt-BR')}

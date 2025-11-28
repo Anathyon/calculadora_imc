@@ -2,7 +2,11 @@ import { motion } from "framer-motion"
 import { useImcStore } from "../../store/imcStore"
 import { useState, useEffect } from "react"
 
-export default function Recomendacoes() {
+interface RecomendacoesProps {
+  darkMode: boolean
+}
+
+export default function Recomendacoes({ darkMode }: RecomendacoesProps) {
   const { imc } = useImcStore()
   const [isMobile, setIsMobile] = useState(false)
   
@@ -105,10 +109,10 @@ export default function Recomendacoes() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
       style={{
-        backgroundColor: '#1e293b',
+        backgroundColor: darkMode ? '#1e293b' : '#ffffff',
         borderRadius: '16px',
         padding: isMobile ? '20px' : '24px',
-        border: '1px solid #334155',
+        border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0',
         marginTop: '16px'
       }}
     >
@@ -147,7 +151,7 @@ export default function Recomendacoes() {
               alignItems: 'flex-start',
               gap: '12px',
               padding: '12px',
-              backgroundColor: 'rgba(55, 65, 81, 0.5)',
+              backgroundColor: darkMode ? 'rgba(55, 65, 81, 0.5)' : '#f8fafc',
               borderRadius: '8px',
               border: `1px solid ${recomendacao.cor}20`
             }}
@@ -161,7 +165,7 @@ export default function Recomendacoes() {
               flexShrink: 0
             }} />
             <span style={{
-              color: '#e5e7eb',
+              color: darkMode ? '#e5e7eb' : '#374151',
               fontSize: isMobile ? '14px' : '15px',
               lineHeight: '1.5'
             }}>
@@ -179,7 +183,7 @@ export default function Recomendacoes() {
         border: '1px solid rgba(34, 197, 94, 0.2)'
       }}>
         <p style={{
-          color: '#9ca3af',
+          color: darkMode ? '#9ca3af' : '#6b7280',
           fontSize: '12px',
           margin: '0',
           textAlign: 'center'
