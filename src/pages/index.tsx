@@ -33,11 +33,19 @@ export default function Home() {
 
   useEffect(() => {
     const checkPwaInstallation = () => {
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-      const isInWebAppiOS = 'standalone' in window.navigator && (window.navigator as { standalone?: boolean }).standalone === true
-      const isInstalled = isStandalone || isInWebAppiOS
-      
-      if (!isInstalled) {
+      try {
+        const isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches
+        const isInWebAppiOS = 'standalone' in window.navigator && (window.navigator as { standalone?: boolean }).standalone === true
+        const isInstalled = isStandalone || isInWebAppiOS
+        
+        if (!isInstalled) {
+          setShowPwaNotification(true)
+          if (!isMobile) {
+            setTimeout(() => setShowPwaNotification(false), 5000)
+          }
+        }
+      } catch (error) {
+        console.warn('PWA check failed:', error)
         setShowPwaNotification(true)
         if (!isMobile) {
           setTimeout(() => setShowPwaNotification(false), 5000)
@@ -46,15 +54,23 @@ export default function Home() {
     }
     
     const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault()
-      setDeferredPrompt(e as BeforeInstallPromptEvent)
+      try {
+        e.preventDefault()
+        setDeferredPrompt(e as BeforeInstallPromptEvent)
+      } catch (error) {
+        console.warn('Install prompt handling failed:', error)
+      }
     }
     
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    checkPwaInstallation()
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      checkPwaInstallation()
+    }
     
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      }
     }
   }, [isMobile])
 
@@ -169,31 +185,38 @@ export default function Home() {
           }}>
             Adicione à tela inicial para acesso rápido!
           </p>
-          {deferredPrompt && (
-            <button
-              onClick={async () => {
-                deferredPrompt.prompt()
-                const { outcome } = await deferredPrompt.userChoice
-                if (outcome === 'accepted') {
+          <button
+            onClick={async () => {
+              if (deferredPrompt) {
+                try {
+                  await deferredPrompt.prompt()
+                  const { outcome } = await deferredPrompt.userChoice
+                  if (outcome === 'accepted') {
+                    setShowPwaNotification(false)
+                  }
+                  setDeferredPrompt(null)
+                } catch (error) {
+                  console.warn('Install prompt failed:', error)
                   setShowPwaNotification(false)
                 }
-                setDeferredPrompt(null)
-              }}
-              style={{
-                backgroundColor: '#22c55e',
-                color: 'white',
-                border: 'none',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                fontSize: '13px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                width: '100%'
-              }}
-            >
-              Instalar Agora
-            </button>
-          )}
+              } else {
+                setShowPwaNotification(false)
+              }
+            }}
+            style={{
+              backgroundColor: '#22c55e',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              padding: '8px 16px',
+              fontSize: '13px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              width: '100%'
+            }}
+          >
+            {deferredPrompt ? 'Instalar Agora' : 'Fechar'}
+          </button>
         </div>
       )}
       
