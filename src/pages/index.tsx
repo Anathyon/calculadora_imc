@@ -4,6 +4,11 @@ import { Inter } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useImcStore } from '../store/imcStore'
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+}
+
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
@@ -15,6 +20,8 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [dicasOpen, setDicasOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(true)
+  const [showPwaNotification, setShowPwaNotification] = useState(false)
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const { historico, setPeso, setAltura } = useImcStore()
 
   useEffect(() => {
@@ -23,6 +30,33 @@ export default function Home() {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  useEffect(() => {
+    const checkPwaInstallation = () => {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+      const isInWebAppiOS = 'standalone' in window.navigator && (window.navigator as { standalone?: boolean }).standalone === true
+      const isInstalled = isStandalone || isInWebAppiOS
+      
+      if (!isInstalled) {
+        setShowPwaNotification(true)
+        if (!isMobile) {
+          setTimeout(() => setShowPwaNotification(false), 5000)
+        }
+      }
+    }
+    
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault()
+      setDeferredPrompt(e as BeforeInstallPromptEvent)
+    }
+    
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    checkPwaInstallation()
+    
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    }
+  }, [isMobile])
 
   const downloadHistorico = () => {
     if (historico.length === 0) {
@@ -77,6 +111,92 @@ export default function Home() {
         margin: '0',
         padding: '0'
       }}>
+      
+      {/* PWA Notification */}
+      {showPwaNotification && (
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          backgroundColor: darkMode ? '#1e293b' : '#ffffff',
+          color: darkMode ? 'white' : '#1f2937',
+          padding: '16px',
+          borderRadius: '12px',
+          boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+          border: darkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+          zIndex: 1000,
+          fontSize: '14px',
+          fontWeight: '500',
+          maxWidth: isMobile ? '280px' : '320px',
+          minWidth: '250px'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            marginBottom: '12px'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              <svg style={{ width: '20px', height: '20px', color: '#22c55e' }} fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+              </svg>
+              <span>Instalar App</span>
+            </div>
+            <button
+              onClick={() => setShowPwaNotification(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: darkMode ? '#94a3b8' : '#6b7280',
+                cursor: 'pointer',
+                fontSize: '18px',
+                padding: '0',
+                lineHeight: '1'
+              }}
+            >
+              ×
+            </button>
+          </div>
+          <p style={{
+            margin: '0 0 12px 0',
+            fontSize: '13px',
+            color: darkMode ? '#cbd5e1' : '#64748b',
+            lineHeight: '1.4'
+          }}>
+            Adicione à tela inicial para acesso rápido!
+          </p>
+          {deferredPrompt && (
+            <button
+              onClick={async () => {
+                deferredPrompt.prompt()
+                const { outcome } = await deferredPrompt.userChoice
+                if (outcome === 'accepted') {
+                  setShowPwaNotification(false)
+                }
+                setDeferredPrompt(null)
+              }}
+              style={{
+                backgroundColor: '#22c55e',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '8px 16px',
+                fontSize: '13px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                width: '100%'
+              }}
+            >
+              Instalar Agora
+            </button>
+          )}
+        </div>
+      )}
+      
       {/* Header */}
       <div style={{
         backgroundColor: darkMode ? '#1e293b' : '#ffffff',
