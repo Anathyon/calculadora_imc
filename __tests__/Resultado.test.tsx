@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import Resultado from '../src/pages/components/Resultado'
 import { useImcStore } from '../src/store/imcStore'
 
 // Mock do framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => <div {...props}>{children}</div>,
   },
 }))
 
@@ -21,17 +22,15 @@ describe('Componente Resultado', () => {
       peso: "0",
       altura: "0",
       historico: [],
-      mostrarHistorico: false,
       setPeso: jest.fn(),
       setAltura: jest.fn(),
       setImc: jest.fn(),
       adicionarHistorico: jest.fn(),
       limparHistorico: jest.fn(),
-      setMostrarHistorico: jest.fn(),
       calcularImc: jest.fn(),
     })
 
-    render(<Resultado />)
+    render(<Resultado darkMode={false} />)
     
     expect(screen.getByText('Preencha os campos e calcule seu IMC')).toBeInTheDocument()
   })
@@ -42,17 +41,15 @@ describe('Componente Resultado', () => {
       peso: "70",
       altura: "1.75",
       historico: [],
-      mostrarHistorico: false,
       setPeso: jest.fn(),
       setAltura: jest.fn(),
       setImc: jest.fn(),
       adicionarHistorico: jest.fn(),
       limparHistorico: jest.fn(),
-      setMostrarHistorico: jest.fn(),
       calcularImc: jest.fn(),
     })
 
-    render(<Resultado />)
+    render(<Resultado darkMode={false} />)
     
     expect(screen.getByText('22.86')).toBeInTheDocument()
     expect(screen.getByText('Peso normal')).toBeInTheDocument()
