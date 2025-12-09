@@ -21,6 +21,8 @@ interface ImcStore {
   calcularImc: () => void
 }
 
+const MAX_HISTORICO = 50
+
 export const useImcStore = create<ImcStore>()(persist(
   (set, get) => ({
     peso: "0",
@@ -28,30 +30,31 @@ export const useImcStore = create<ImcStore>()(persist(
     imc: "0",
     historico: [],
 
+    setPeso: (peso: string) => set({ peso }),
+    setAltura: (altura: string) => set({ altura }),
+    setImc: (imc: string) => set({ imc }),
     
-    setPeso: (peso) => set({ peso }),
-    setAltura: (altura) => set({ altura }),
-    setImc: (imc) => set({ imc }),
-    
-    adicionarHistorico: (item) => {
-      const novoItem = { 
+    adicionarHistorico: (item: Omit<HistoricoItem, 'data'>) => {
+      const novoItem: HistoricoItem = { 
         ...item, 
         data: new Date().toLocaleString('pt-BR')
       }
-      set((state) => ({
-        historico: [...state.historico, novoItem]
-      }))
+      set((state) => {
+        const novoHistorico = [...state.historico, novoItem]
+        return {
+          historico: novoHistorico.slice(-MAX_HISTORICO)
+        }
+      })
     },
     
     limparHistorico: () => set({ historico: [] }),
 
-    
     calcularImc: () => {
       const { peso, altura } = get()
       const p = parseFloat(peso.replace(",", "."))
       const a = parseFloat(altura.replace(",", "."))
 
-      if (!isNaN(p) && !isNaN(a) && a > 0) {
+      if (!isNaN(p) && !isNaN(a) && p > 0 && a > 0) {
         const resultado = p / (a * a)
         const resultadoFormatado = resultado.toFixed(2)
         set({ imc: resultadoFormatado })
