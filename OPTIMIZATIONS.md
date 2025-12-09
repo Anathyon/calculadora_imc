@@ -50,7 +50,7 @@
 ## 📦 Dependências Finais
 
 ### Produção
-- next: 15.3.2
+- next: 15.5.7 ✅ (sem vulnerabilidades)
 - react: ^19.0.0
 - react-dom: ^19.0.0
 - zustand: ^4.4.0
@@ -69,16 +69,17 @@
 ## 📊 Métricas de Build
 
 ```
-✓ Compiled successfully in 0ms
+✓ Compiled successfully in 4.4s
 ✓ No ESLint warnings or errors
 ✓ All type checks passed
+✓ 0 vulnerabilities found
 
 Route (pages)                    Size    First Load JS
-┌ ○ /                         5.13 kB      141 kB
-├ ○ /components/Calcimc        204 B       136 kB
-├ ○ /components/Form...       1.52 kB      133 kB
-├ ○ /components/Recomend...   2.19 kB      134 kB
-└ ○ /components/Resultado     1.72 kB      133 kB
+┌ ○ /                         4.93 kB      144 kB
+├ ○ /components/Calcimc        195 B       139 kB
+├ ○ /components/Form...       1.52 kB      136 kB
+├ ○ /components/Recomend...   2.19 kB      137 kB
+└ ○ /components/Resultado     1.72 kB      136 kB
 ```
 
 ## 🔒 Segurança
